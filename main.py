@@ -1,7 +1,23 @@
+from sklearn.linear_model import LinearRegression
 
-def say_hello(x):
-    """Sample"""
-    print('Hello', x)
+X = [
+    [1],
+    [2],
+    [3],
+    [4]
+]
 
-if __name__ == "__main__":
-    say_hello("xxx")
+y = [
+    5,
+    10,
+    15,
+    20
+]
+
+model = LinearRegression()
+
+model.fit(X, y)
+
+prediction = model.predict([[6]])
+
+print(prediction)
