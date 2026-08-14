@@ -1,7 +1,7 @@
 
-def say_hello():
+def say_hello(x):
     """Sample"""
-    print('Hello')
+    print('Hello', x)
 
 if __name__ == "__main__":
-    say_hello()
+    say_hello("xxx")
