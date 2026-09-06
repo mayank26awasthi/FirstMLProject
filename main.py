@@ -1,23 +1,26 @@
-from sklearn.linear_model import LinearRegression
+from langchain_ollama.llms import OllamaLLM
+from langchain_core.prompts import ChatPromptTemplate
+from vector import retriever
 
-X = [
-    [1],
-    [2],
-    [3],
-    [4]
-]
+model = OllamaLLM(model="llama3.2")
 
-y = [
-    5,
-    10,
-    15,
-    20
-]
+template = """
+You are an exeprt in answering questions about a pizza restaurant
 
-model = LinearRegression()
+Here are some relevant reviews: {reviews}
 
-model.fit(X, y)
+Here is the question to answer: {question}
+"""
+prompt = ChatPromptTemplate.from_template(template)
+chain = prompt | model
 
-prediction = model.predict([[6]])
+while True:
+    print("\n\n-------------------------------")
+    question = input("Ask your question (q to quit): ")
+    print("\n\n")
+    if question == "q":
+        break
 
-print(prediction)
+    reviews = retriever.invoke(question)
+    result = chain.invoke({"reviews": reviews, "question": question})
+    print(result)
